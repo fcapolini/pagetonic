@@ -1,7 +1,8 @@
 <lib>
 	<link rel="stylesheet" href="/res/font-awesome/css/font-awesome.min.css"/>
 	<style :toolbarHeight="${40}"
-	       :leftWidth="200px"
+           :leftWidth="200px"
+           :leftBottomHeight="${0}"
 	       :rightWidth="300px"
 	       :topHeightPercent="54"
 	       :bg="#f0f0f0"
@@ -38,6 +39,7 @@
         .toolbar button {
             float: right;
             height: 100%;
+            width: 44px;
             font-size: ${toolbarHeight / 2.3}px;
             color: #fff;
             background: transparent;
@@ -73,22 +75,39 @@
 	        color: #fff;
 	        background: ${cssColorOffset('#abc', -70, 1.25)};
 	        border-right: 0px solid ${cssColorOffset('#abc', 0)};
-	        overflow: scroll;
         }
-        .left-bar ol li {
+        .left-bar ol > li {
             color: rgba(255,255,255,.66);
             padding: 4px 0;
         }
-        .left-bar ol li span {
+        .left-bar ol > li > span {
 			line-height: 15px;
             color: rgba(255,255,255,.66);
             text-decoration: none;
             padding: 6px 0;
         }
-        .left-bar ol li span.selected {
+        .left-bar ol > li > span.selected {
             color: #fff;
 			font-weight: 500;
 			cursor: default;
+        }
+        .left-top {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: ${leftBottomHeight}px;
+	        overflow: scroll;
+        }
+        .left-bottom {
+            display: ${leftBottomHeight > 0 ? 'block' : 'none'};
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            height: ${leftBottomHeight}px;
+            color: rgba(255,255,255,.66);
+            line-height: ${leftBottomHeight - 1}px;
+            padding: 0 15px;
+            border-top: 1px solid rgba(255,255,255,.33);
         }
         .center {
             position: absolute;

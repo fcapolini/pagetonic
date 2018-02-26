@@ -36,14 +36,14 @@ using StringTools;
 
 class Preprocessor {
 	public static inline var MAXNESTING = 100;
-	public static inline var TRANSPARENT_TAGNAME = 'group';
+	public static inline var TRANSPARENT_TAGNAME = 'ub1-group';
 	public static inline var ESCAPED_TAGNAME = 'escaped';
 	public static inline var ESCAPED_TABSPACESATTR = 'tabspaces';
-	public static inline var INCLUDE_TAGNAME = 'include';
+	public static inline var INCLUDE_TAGNAME = 'ub1-include';
 	public static inline var INCLUDE_NAMEATTR = 'href';
-	public static inline var MACRODEF_TAGNAME = 'macro';
+	public static inline var MACRODEF_TAGNAME = 'ub1-macro';
 	public static inline var MACRODEF_NAMEATTR = 'name';
-	public static inline var SLOTDEF_TAGNAME = 'slot';
+	public static inline var SLOTDEF_TAGNAME = 'ub1-slot';
 	public static inline var SLOTDEF_NAMEATTR = 'name';
 	public static inline var SLOTREF_NAMEATTR = 'slot';
 	public static inline var DEFAULTSLOT_NAME = 'default';

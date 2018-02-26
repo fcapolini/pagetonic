@@ -1,10 +1,10 @@
 <html :sample="$data{list://item[1]/@name}">
 <head>
 	<title>Ub1 Playground</title>
-	<include href="style.htm"/>
+	<ub1-include href="style.htm"/>
 </head>
 <body>
-	<dataset :name="list"
+	<ub1-dataset :name="list"
 	         :server="${makeData()}"
 	         :makeData="${function() {
 	            var names = sysReadDirectory(sysFSPath + '/samples');
@@ -12,36 +12,44 @@
 	            return names.map(function(n) {return {name:n.split('.')[0]}});
 	         }}"/>
 
-	<dataset :name="source"
+	<ub1-dataset :name="source"
 	         :src="/playground/samples/${sample}.html?ub1_source_in=true"/>
 
-	<dataset :name="text"
+	<ub1-dataset :name="text"
 	         :src="/playground/texts/${sample}.md"/>
 
 	<div class="toolbar">
-		<include href="logo.htm"/>
+		<ub1-include href="logo.htm"/>
+		<button :ev_click="${window.open('https://github.com/fcapolini/ub1', '_blank')}"
+				title="GitHub Project">
+			<i class="fa fa-fw fa-github" style="margin-left:-1px;font-size:120%"/>
+		</button>
 		<button :ev_click="${window.location.href = 'mailto:admin@ub1devel.net'}"
 				title="Contact Us">
-			<i class="fa fa-fw fa-envelope" style="padding-bottom:2px"/>
+			<i class="fa fa-fw fa-envelope" style="padding-bottom:3px"/>
 		</button>
 		<button :ev_click="${messageDialog.open = true}"
+				s_display="none"
 		        title="Submit a Comment">
-			<i class="fa fa-fw fa-comment" style="padding-bottom:2px"/>
+			<i class="fa fa-fw fa-comment" style="padding-bottom:3px"/>
 		</button>
 	</div>
 
 	<div class="main">
 		<div class="left-bar">
-			<ol>
-				<li :foreach="list:/root/item">
-					<span c_link
-					      c_selected="${sample == dataGet('@name')}"
-					      :sampleName="${dataGet('@name').split('_')[1]}"
-					      :ev_click="${sample = dataGet('@name')}">
-						${regex('-', 'g').replace(sampleName, ' ')}
-					</span>
-				</li>
-			</ol>
+			<div class="left-top">
+				<ol>
+					<li :foreach="list:/root/item">
+						<span c_link
+							c_selected="${sample == dataGet('@name')}"
+							:sampleName="${dataGet('@name').split('_')[1]}"
+							:ev_click="${sample = dataGet('@name')}">
+							${regex('-', 'g').replace(sampleName, ' ')}
+						</span>
+					</li>
+				</ol>
+			</div>
+			<div class="left-bottom"/>
 		</div>
 
 		<div class="center">
@@ -147,7 +155,7 @@
 		</div>
 	</div>
 
-	<include href="message.htm"/>
+	<ub1-include href="message.htm"/>
 
 	<!-- https://ace.c9.io/#nav=embedding -->
 	<script src="/res/ace-builds/src-min-noconflict/ace.js"></script>

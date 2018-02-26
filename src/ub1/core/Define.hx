@@ -31,6 +31,7 @@ using ub1.util.PropertyTool;
 	TODO: slots
 **/
 class Define extends Element {
+	public static inline var TAGNAME = 'ub1-define';
 	public static inline var DEFNAME_PROP = Element.NODE_PREFIX + 'def';
 	public static inline var EXTNAME_PROP = Element.NODE_PREFIX + 'ext';
 	public var ext(default,null): Define;

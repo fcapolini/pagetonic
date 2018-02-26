@@ -14,4 +14,4 @@ We can now use it in our code:
 
 by only specifying what it is (a product) and what changes between its instances (name and price).
 
-**NOTE:** it's good practice to only use hyphenated names for _custom tags_ so they don't get confused with native tags.
+_**NOTE:** it's good practice to only use hyphenated names for custom tags so they don't get confused with native tags._

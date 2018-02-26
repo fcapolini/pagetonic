@@ -9,7 +9,7 @@ In ub1, an _HTML component_ is a _custom tag_ that:
 * represents an abstraction that's potentially useful in more than one project
 * specializes either a native tag or another _HTML component_ (i.e. not a generic _custom tag_).
 
-`<style>` tags nested into a `<define>` are special: _(**NOTE:** this is being implemented and isn't available here yet)_
+`<style>` tags nested into a `<ub1-define>` are special: _(**NOTE:** this is being implemented and isn't available here yet)_
 
 * they're included in the page's `<head>` only if the defined tag is actually used
 * they're included only once regardless of how many times the tag is used

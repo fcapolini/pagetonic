@@ -15,5 +15,5 @@ You can edit any example in the editor above and refresh the preview on the righ
 _**NOTE:** in its current alpha stage, ub1 doesn't provide compilation errors and simply fails silently when something is wrong in your code._
 
 ---
-*(1) Ub1 can currently be deployed to PHP, Java and [Neko](https://nekovm.org/) servers.*<br>
+*(1) Ub1 can currently be deployed to PHP servers, with Node.js and Java coming soon.*<br>
 *(2) This playground is a ub1 application which uses [ace-editor](https://ace.c9.io/) and [showdown](https://github.com/showdownjs/showdown) in the client.*

@@ -1,6 +1,6 @@
-You can declare a data source with the `<dataset>` tag:
+You can declare a data source with the `<ub1-dataset>` tag:
 
-    <dataset :name="...">
+    <ub1-dataset :name="...">
 
 In this sample we have a static data set expressed in XML. Ub1's data-binding works using the `:datapath` attribute and the `$data{}` expression.
 

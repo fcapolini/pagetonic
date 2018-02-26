@@ -13,3 +13,7 @@ Crucially, it adopts an HTML-first approach: it doesn't impose a model on you an
 It strives to keep true to HTML's declarative nature, and has remarkably light client runtime of just 40KB (minified, gzipped).
 
 It's currently in alpha stage. An online playground is available [here](http://ub1devel.net/playground/).
+
+---
+*(1) Ub1 can currently be deployed to PHP servers, with Node.js and Java coming soon.*<br>
+*(2) For example the online playground is a ub1 application which uses [ace-editor](https://ace.c9.io/) and [showdown](https://github.com/showdownjs/showdown) in the client.*

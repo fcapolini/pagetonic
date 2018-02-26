@@ -82,8 +82,8 @@ class Loader {
 		ret = switch (e.name) {
 			case 'head': new Head(p, props);
 			case 'body': new Body(p, props);
-			case 'dataset': new Dataset(p, loadDataProps(e, props));
-			case 'define': new Define(p, loadDefineProps(e, props));
+			case Dataset.TAGNAME: new Dataset(p, loadDataProps(e, props));
+			case Define.TAGNAME: new Define(p, loadDefineProps(e, props));
 			default: new Element(p, props);
 		}
 		loadChildren(ret, e);

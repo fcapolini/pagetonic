@@ -5,12 +5,12 @@
 	</style>
 </head>
 <body>
-	<dataset :name="dset">
+	<ub1-dataset :name="dset">
 		<json>{
 			"name": "John Smith",
 			"phone": "617-536-7855"
 		}</json>
-	</dataset>
+	</ub1-dataset>
 
 	<span :datapath="dset:/root">$data{@name}</span>
 	<span :datapath="dset:/root">$data{@phone}</span>
