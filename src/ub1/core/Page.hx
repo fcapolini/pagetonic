@@ -178,7 +178,7 @@ class Page extends Element implements ServerPage {
 		createDomElement('script', null, body).domSetInnerHTML(s);
 		createDomTextNode('\n', body);
 		createDomElement('script', {
-			src:'/__ub1/client/bin/client.min.js',
+			src:'/__ub1/client/bin/ub1.js',
 			async: 'async',
 		}, body);
 		createDomTextNode('\n', body);

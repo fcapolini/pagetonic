@@ -69,19 +69,6 @@ class ArrayTool {
         return true;
     }
 
-//	public static function indexOf(array:Array<Dynamic>, item:Dynamic): Int {
-//		var i = -1;
-//		if (array != null) {
-//			for (e in array) {
-//				i++;
-//				if (e == item) {
-//					return i;
-//				}
-//			}
-//		}
-//		return -1;
-//	}
-
     public static function shuffle(array:Array<Dynamic>): Void {
         // http://stackoverflow.com/a/2450976
     	var currentIndex = array.length, temporaryValue, randomIndex;
@@ -97,6 +84,7 @@ class ArrayTool {
     		temporaryValue = array[currentIndex];
     		array[currentIndex] = array[randomIndex];
     		array[randomIndex] = temporaryValue;
+			
     	}
     }
 

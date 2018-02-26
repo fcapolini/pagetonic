@@ -21,10 +21,6 @@
 
 package ub1.util;
 
-//import ub1.util.MapTool;
-//import ub1.Util;
-
-import StringTools;
 using StringTools;
 
 class Url {

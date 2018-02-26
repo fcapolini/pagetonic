@@ -57,7 +57,7 @@ class DataPath {
 		#end
 		attributeRE = ~/(@)([_0-9a-z]+)/ig;
 		compareRE = ~/([^<|>|!])(=)/g;
-		// TODO: PHP- and Java-specific fixes concerning compare between
+		// TODO: PHP- and Java-specific fixes concerning comparison between
 		// strings and numbers should go into hscript
 		#if (php || neko)
 			equalRightNumberRE = ~/(!?=)\s*([0-9]+)/g;

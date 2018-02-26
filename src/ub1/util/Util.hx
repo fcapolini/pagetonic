@@ -98,23 +98,7 @@ class Util {
 	}
 
 	public static inline function getTextFileContent(fname: String): String {
-		// #if (!js && !java)
-		// 	var ret = new StringBuf();
-		// 	var fi:sys.io.FileInput = sys.io.File.read(fname);
-		// 	try {
-		// 		while (true) {
-		// 			//REFINE: per com'è implementato readLine, in Java:
-		// 			//- non gestisce UTF
-		// 			//- potrebbe saltare l'ultima riga se non terminata da un LF?
-		// 			ret.add(fi.readLine());
-		// 			ret.add('\n');
-		// 		}
-		// 	} catch(ignored: haxe.io.Eof) {}
-		// 	return ret.toString();
-		// #else
-		// 	return null; //return '{"domain": "localhost"}';
-		// #end
-		#if (!js && !java)
+		#if (!js)
 			return sys.io.File.getContent(fname);
 		#else
 			return null;
@@ -160,29 +144,6 @@ class Util {
 		}
 		return -1;
 	}
-
-	/*
-	public static function parseStyles(s:String, map:Map<String, String>=null,
-			forbiddenKeys:Map<String,Bool>=null) {
-		if (map == null) {
-			map = new Map<String, String>();
-		}
-		if (s != null) {
-			var styles = s.split(";");
-			for (style in styles) {
-				var parts = style.split(":");
-				if (parts.length > 1) {
-					var key = StringTools.trim(parts[0]);
-					var val = StringTools.trim(parts[1]);
-					if (forbiddenKeys == null || !forbiddenKeys.exists(key)) {
-						map.set(key, val);
-					}
-				}
-			}
-		}
-		return map;
-	}
-	*/
 
 	public static function parseStyles(s:String,
 	                                   map:Map<String, String> =null,
@@ -249,20 +210,6 @@ class Util {
 		}
 		return ret;
 	}
-
-	/*
-	public static function toClient(s:String): String {
-		s = StringTools.replace(s, "`", "&quot;");
-		s = StringTools.replace(s, "'", "`");
-		return s;
-	}
-
-	static public function fromServer(s:String): String {
-		s = StringTools.replace(s, "`", "'");
-		s = StringTools.replace(s, "&quot;", "`");
-		return s;
-	}
-	*/
 
 	public static function xmlChildrenNamed(xml:Xml, key:String, cb:Xml->Void) {
 		for (child in xml.elementsNamed(key)) {

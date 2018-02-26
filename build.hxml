@@ -14,3 +14,4 @@
 -main ub1.Server
 -lib HtmlParser
 -D server
+-D devel

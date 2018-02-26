@@ -239,7 +239,7 @@ class XmlTools {
 		return Xml.parse(xml.toString()).firstElement();
 	}
 
-// non sembra fungere
+// doesn't seem to work
 //	public static function removeBlanks(xml:Xml) {
 //		var blanks:Array<Xml> = [];
 //		for (child in xml) {
