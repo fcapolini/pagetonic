@@ -1,0 +1,24 @@
+<html>
+<head>
+	<style>
+		body {font-family: sans-serif}
+        .product {
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid #ddd;
+            margin: 3px;
+        }
+	</style>
+</head>
+<body>
+
+	<define tag="product:div" class="product">
+		<div><span>Name:</span> ${name}</div>
+		<div><span>Price:</span> ${price}</div>
+	</define>
+
+	<product :name="Thingy" :price="1€"/>
+	<product :name="Widget" :price="2€"/>
+
+</body>
+</html>
