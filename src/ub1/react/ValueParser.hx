@@ -21,7 +21,7 @@
 
 package ub1.react;
 
-import ub1.util.Log;
+import ub1.Ub1Log;
 
 //TODO strip line and block comments from expression
 class ValueParser {
@@ -107,7 +107,7 @@ class ValueParser {
 			sb.add(StringTools.replace(s.substring(i2), '"', '\\"'));
 			sb.add('"');
 		}
-		Log.valueParser('parse("$s"): ${sb.toString()}');
+		Ub1Log.valueParser('parse("$s"): ${sb.toString()}');
 		return isDynamic;
 	}
 

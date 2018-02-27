@@ -23,7 +23,7 @@ package ub1.react;
 
 import hscript.Expr;
 import hscript.Parser;
-import ub1.util.Log;
+import ub1.Ub1Log;
 import ub1.util.DoubleLinkedItem;
 import ub1.util.Observable;
 
@@ -82,13 +82,13 @@ class Value extends DoubleLinkedItem {
 				on = ValueParser.unpatchLF(on);
 				args = ValueParser.unpatchLF(args);
 				body = ValueParser.unpatchLF(body);
-				Log.value('new(): parsed function: [$on] ($args) -> {$body}');
+				Ub1Log.value('new(): parsed function: [$on] ($args) -> {$body}');
 				var keys = ~/\s*,\s*/.split(StringTools.trim(args));
 				var e = null;
 				try {
 					e = parser.parseString(body);
 				} catch (ex:Dynamic) {
-					Log.value('new(): $ex');
+					Ub1Log.value('new(): $ex');
 				}
 				if (e != null) {
 					on == 'undefined' ? on = null : null;
@@ -98,10 +98,10 @@ class Value extends DoubleLinkedItem {
 						try {
 							exp = parser.parseString(on);
 						} catch (ex:Dynamic) {
-							Log.value('new(): $ex');
+							Ub1Log.value('new(): $ex');
 						}
 						cb = function(u:Dynamic, k:String, v:Dynamic) {
-							Log.value('parsed handler activated with ' + v);
+							Ub1Log.value('parsed handler activated with ' + v);
 							var locals = new Map<String,Dynamic>();
 							if (keys.length > 0) {
 								locals.set(keys[0], v);
@@ -117,7 +117,7 @@ class Value extends DoubleLinkedItem {
 								loc.set(key, (count < len ? v[count++] : null));
 							}
 							var res = scope.context.interp.evaluateWith(e, scope, loc);
-							Log.value('parsed function result: $res');
+							Ub1Log.value('parsed function result: $res');
 							return res;
 						});
 					}
@@ -126,7 +126,7 @@ class Value extends DoubleLinkedItem {
 				var sb = new StringBuf();
 				try {
 					ValueParser.parse(value, sb);
-					Log.value('new(): parsed expression: ${sb.toString()}');
+					Ub1Log.value('new(): parsed expression: ${sb.toString()}');
 					exp = parser.parseString(sb.toString());
 					// Log.value('new(): compiled: $exp');
 					// #if (debug && logValue)
@@ -135,7 +135,7 @@ class Value extends DoubleLinkedItem {
 					//     Log.value('new(): serialized: ${s.toString()}');
 					// #end
 				} catch (ex:Dynamic) {
-					Log.value('new(): $ex');
+					Ub1Log.value('new(): $ex');
 				}
 			}
 		} else {
@@ -155,7 +155,7 @@ class Value extends DoubleLinkedItem {
     }
     
     public function get(): Dynamic {
-        Log.value('${name}.get()');
+        Ub1Log.value('${name}.get()');
 	    refresh();
         if (scope.context.isRefreshing) {
             // while refreshing, get() performs a "dependencies pull"
@@ -179,7 +179,7 @@ class Value extends DoubleLinkedItem {
 	}
 
     public function set(v:Dynamic) {
-        Log.value('${name}.set("$v")');
+        Ub1Log.value('${name}.set("$v")');
         var oldValue = value;
         if (_set(v) && !scope.context.isRefreshing) {
             // while not refreshing, set() performs a "dependencies push"
@@ -202,7 +202,7 @@ class Value extends DoubleLinkedItem {
     }
     
     public inline function refresh(force=false) {
-        Log.value('${name}.refresh()');
+        Ub1Log.value('${name}.refresh()');
         if (cycle != scope.context.cycle || force) {
             cycle = scope.context.cycle;
             if (isDynamic()) {
@@ -226,10 +226,10 @@ class Value extends DoubleLinkedItem {
 					} else {
 						v = scope.context.interp.evaluate(exp, scope);
 					}
-                    Log.value('${name}.refresh(): $v');
+                    Ub1Log.value('${name}.refresh(): $v');
                     set(v);
                 } catch (ex:Dynamic) {
-                    Log.value('${name}.refresh() error: $ex');
+                    Ub1Log.value('${name}.refresh() error: $ex');
                 }
                 if (scope.context.isRefreshing) {
                     scope.context.stack.pop();
@@ -277,7 +277,7 @@ class Value extends DoubleLinkedItem {
 
 	// called only at `push` time (i.e. outside of refreshes)
     function observer(s:Value, oldValue:Dynamic) {
-        Log.value('${name}.observer() old: "$oldValue", new: "${s.value}"');
+        Ub1Log.value('${name}.observer() old: "$oldValue", new: "${s.value}"');
         get();
     }
 

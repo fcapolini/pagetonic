@@ -21,7 +21,7 @@
 
 package ub1.core;
 
-import ub1.util.Log;
+import ub1.Ub1Log;
 import ub1.util.Observable;
 import haxe.Timer;
 import haxe.Http;
@@ -226,7 +226,7 @@ class Dataset extends Element implements DataProvider {
 			}
 
 			http.onData = function(text:String) {
-				Log.data('$uid onData: $text');
+				Ub1Log.data('$uid onData: $text');
 				clearHttp();
 				if (~/^\s*[\{\[]/.match(text)) {
 					set(JSON_PROP, text, false);
@@ -242,7 +242,7 @@ class Dataset extends Element implements DataProvider {
 			}
 
 			http.onError = function(error:String) {
-				Log.data('$id onError: $error');
+				Ub1Log.data('$id onError: $error');
 				clearHttp();
 				set(ERROR_VALUE, error);
 				observable.notifyObservers(this, DataNotification.REQUESTEND);

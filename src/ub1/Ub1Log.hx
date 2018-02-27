@@ -19,11 +19,11 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package ub1.util;
+package ub1;
 
 import haxe.macro.Expr;
 
-class Log {
+class Ub1Log {
 
 	macro public static function data(e:Expr) {
 		#if (debug && logData)

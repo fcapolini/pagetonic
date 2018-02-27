@@ -21,7 +21,7 @@
 
 package ub1.react;
 
-import ub1.util.Log;
+import ub1.Ub1Log;
 import hscript.Expr;
 import hscript.Interp;
 import ub1.react.Value;
@@ -212,7 +212,7 @@ class ValueInterp extends Interp {
             ret = cast(ret, Value).get();
             this.locals = locals;
         }
-        Log.valueInterp('resolve($id): $ret');
+        Ub1Log.valueInterp('resolve($id): $ret');
         return ret;
     }
 
@@ -253,12 +253,12 @@ class ValueInterp extends Interp {
         } else {
             ret = super.get(o, f);
         }
-        Log.valueInterp('get($f): $ret');
+        Ub1Log.valueInterp('get($f): $ret');
         return ret;
 	}
 	
 	override function set(o:Dynamic, f:String, v:Dynamic): Dynamic {
-        Log.valueInterp('set($f): $v');
+        Ub1Log.valueInterp('set($f): $v');
         if (Std.is(o, ValueScope)) {
             untyped o.set(f, v);
             return v;

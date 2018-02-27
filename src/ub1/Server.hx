@@ -21,7 +21,7 @@
 
 package ub1;
 
-import ub1.util.Log;
+import ub1.Ub1Log;
 import haxe.io.Path;
 import sys.io.File;
 import sys.FileSystem;
@@ -53,9 +53,9 @@ class Server {
 		var root = DOMAINS_ROOT + domain;
 		var re = ~/\.(\w+)$/;
 		var ext = re.match(uri) ? re.matched(1) : null;
-		Log.server('domain: $domain');
-		Log.server('uri: $uri');
-		Log.server('ext: $ext');
+		Ub1Log.server('domain: $domain');
+		Ub1Log.server('uri: $uri');
+		Ub1Log.server('ext: $ext');
 		// 'htm' files are never served (they're page fragments)
 		if (ext != null && ext != 'html') {
 			if (ext != 'htm') {
@@ -112,7 +112,7 @@ class Server {
 	                           params:Map<String,String>) {
 		var src:HtmlDocument = null;
 		//uri = uri.replace('%20', ' ');
-		Log.server('outputPage($root, $uri)');
+		Ub1Log.server('outputPage($root, $uri)');
 		try {
 			var p = new Preprocessor();
 #if devel
