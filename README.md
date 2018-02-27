@@ -92,7 +92,7 @@ Data-binding works using `:datapath` attributes and `$data{}` expressions:
 * `:datapath` sets the data context of a tag using a data path expression, expressed in a subset of XPath
 * `$data{}` injects the textual result of a data path expression executed in the context set by `:datapath`.
 
-Any tag can be replicated by using `:foreach` instead of `:datapath`: for each matched data, a clone of the tag is generated and populated using the match as its own data context.
+Any tag can be replicated by using `:foreach` instead of `:datapath`. For each matched data, a clone of the tag is generated and populated using the match as its own data context.
 
 Thanks to _isomorphism_, data sets exist in both the client and the server. This allows you to implement server-side services (e.g. DB persistence) that the page will use, and to transparently use the server as a relay when accessing third-party remote data from the client in order to avoid the [Same-origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) limitations.
 
@@ -159,7 +159,7 @@ In ub1, this code will produce exactly the same HTML:
 
     </body>
 
-We simply took our duplicated block and turned it into a custom tag named `<app-product>`, which specializes a `<div>` and has dynamic content. We then used in our code:
+We simply took our duplicated block and turned it into a custom tag named `<app-product>`, which specializes a `<div>` and has dynamic content. We then used it in our code:
 
     <app-product :name="Thingy" :price="1€"/>
     <app-product :name="Widget" :price="2€"/>
@@ -186,4 +186,4 @@ In ub1, an _HTML component_ is a _custom tag_ that:
 * they're placed before any explicit `<style>` tag
 * in case the defined component specializes another component, it makes sure the other component's `<style>` tags are included before its own.
 
-Nested `<style>` tags handling is designed to allow component designers provide baseline styling, leaving component consumers the maximum freedom to customize it wither via CSS overriding (by redeclaring components' CSS classes) or setting the skin attributes a library can provide.
+Nested `<style>` tags handling is designed to allow component designers to provide baseline styling, leaving component consumers the maximum freedom to customize it either through CSS overriding (by redeclaring components' CSS classes) or by setting the skin attributes a library could provide.
