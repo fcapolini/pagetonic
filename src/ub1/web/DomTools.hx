@@ -403,12 +403,9 @@ class DomTools {
 #end
     }
 
-    public inline static function domSetInnerHTML(t:DomElement, v:Dynamic, ?src:String) {
+    public inline static function domSetInnerHTML(t:DomElement, v:Dynamic) {
         v = (v == null ? '' : '$v');
 #if !client
-			//TODO: per risparmiare spazio si dovrebbero inserire i commenti
-			// sole parti dinamiche di un
-            //t.innerHTML = (src != null ? "<!--$" + src + "$-->" + v : v);
 			t.innerHTML = v;
 #else
             t.innerHTML = v;
@@ -419,7 +416,7 @@ class DomTools {
 		return t.innerHTML;
 	}
 
-    public inline static function domSetInnerText(t:DomElement, v:Dynamic, ?src:String) {
+    public inline static function domSetInnerText(t:DomElement, v:Dynamic) {
         v = (v == null ? '' : '$v'.htmlEscape());
 #if !client
 			t.innerHTML = v;
