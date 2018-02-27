@@ -2,7 +2,7 @@
 
 They can be declared as **handler expressions** like this:
 
-    :on_...="${ ... }"
+:on_...="${ ... }"
 
 where after the `:on_` prefix goes the name of the _logical attribute_ whose value changes will cause its execution.
 

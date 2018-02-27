@@ -38,18 +38,20 @@ class Url {
     // throws Dynamic
 	public function new(url:String, params:Map<String,String> =null) {
 		if (urlMatchRegex.match(url)) {
-            try {
-                var s;
-                protocol = (isTrue((s = urlMatchRegex.matched(2))) ? s : null);
-                domain = (isTrue((s = urlMatchRegex.matched(4))) ? s : null);
-                path = (isTrue((s = urlMatchRegex.matched(5))) ? s : null);
-                query = (isTrue((s = urlMatchRegex.matched(7))) ? s : null);
-                pathSlices = null;
-                this.params = (params == null && query != null ? parseQueryString(query) : params);
-                paramCount = -1;
-            } catch (e:Dynamic) {
-                throw('Url.new() - invalid URL: "$url"');
-            }
+			try {
+				var s;
+				protocol = (isTrue((s = urlMatchRegex.matched(2))) ? s : null);
+				domain = (isTrue((s = urlMatchRegex.matched(4))) ? s : null);
+				path = (isTrue((s = urlMatchRegex.matched(5))) ? s : null);
+				query = (isTrue((s = urlMatchRegex.matched(7))) ? s : null);
+				pathSlices = null;
+				this.params = (params == null && query != null
+								? parseQueryString(query)
+								: params);
+				paramCount = -1;
+			} catch (e:Dynamic) {
+				throw('Url.new() - invalid URL: "$url"');
+			}
 		} else {
 			throw('Url.new() - invalid URL: "$url"');
 		}

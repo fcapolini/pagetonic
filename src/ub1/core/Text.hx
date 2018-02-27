@@ -21,6 +21,7 @@
 
 package ub1.core;
 
+import ub1.web.DomTools;
 import ub1.react.Value;
 import ub1.util.BaseNode;
 using ub1.web.DomTools;

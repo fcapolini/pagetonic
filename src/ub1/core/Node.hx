@@ -23,6 +23,7 @@ package ub1.core;
 
 import ub1.react.*;
 import ub1.util.BaseNode;
+import ub1.web.DomTools;
 using ub1.web.DomTools;
 
 class Node extends BaseNode {

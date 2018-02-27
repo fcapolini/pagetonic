@@ -256,14 +256,14 @@ class XmlTools {
 //		}
 //	}
 
-    public static function getElementText(xml:Xml): String {
-        var sb = new StringBuf();
-        for (child in xml.iterator()) {
-            if (child.nodeType == Xml.CData || child.nodeType == Xml.PCData) {
-                sb.add(child.nodeValue);
-            }
-        }
-        return sb.toString();
-    }
+	public static function getElementText(xml:Xml): String {
+		var sb = new StringBuf();
+		for (child in xml.iterator()) {
+			if (child.nodeType == Xml.CData || child.nodeType == Xml.PCData) {
+				sb.add(child.nodeValue);
+			}
+		}
+		return sb.toString();
+	}
 
 }

@@ -26,43 +26,43 @@ import haxe.macro.Expr;
 class Ub1Log {
 
 	macro public static function data(e:Expr) {
-		#if (debug && logData)
-			return macro trace('Data - ' + $e);
-		#else
-			return macro null;
-		#end
+#if (debug && logData)
+		return macro trace('Data - ' + $e);
+#else
+		return macro null;
+#end
 	}
 
 	macro public static function server(e:Expr) {
-		#if (logServer)
-			return macro trace($e + '<br />\n');
-		#else
-			return macro null;
-		#end
+#if (logServer)
+		return macro trace($e + '<br />\n');
+#else
+		return macro null;
+#end
 	}
 
 	macro public static function value(e:Expr) {
-        #if (debug && logValue)
-    		return macro trace('Value - ' + $e);
-        #else
-    		return macro null;
-        #end
+#if (debug && logValue)
+		return macro trace('Value - ' + $e);
+#else
+		return macro null;
+#end
 	}
 
-    macro public static function valueParser(e:Expr) {
-        #if (debug && logValueParser)
-        return macro trace('ValueParser - ' + $e);
-        #else
-        return macro null;
-        #end
-    }
+	macro public static function valueParser(e:Expr) {
+#if (debug && logValueParser)
+		return macro trace('ValueParser - ' + $e);
+#else
+		return macro null;
+#end
+	}
 
-    macro public static function valueInterp(e:Expr) {
-        #if (debug && logValueInterp)
-    		return macro trace('ValueInterp - ' + $e);
-        #else
-    		return macro null;
-        #end
+	macro public static function valueInterp(e:Expr) {
+#if (debug && logValueInterp)
+		return macro trace('ValueInterp - ' + $e);
+#else
+		return macro null;
+#end
 	}
 
 }

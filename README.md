@@ -92,6 +92,8 @@ Data-binding works using `:datapath` attributes and `$data{}` expressions:
 * `:datapath` sets the data context of a tag using a data path expression, expressed in a subset of XPath
 * `$data{}` injects the textual result of a data path expression executed in the context set by `:datapath`.
 
+Ub1 accepts data in both JSON and XML.
+
 Any tag can be replicated by using `:foreach` instead of `:datapath`. For each matched data, a clone of the tag is generated and populated using the match as its own data context.
 
 Thanks to _isomorphism_, data sets exist in both the client and the server. This allows you to implement server-side services (e.g. DB persistence) that the page will use, and to transparently use the server as a relay when accessing third-party remote data from the client in order to avoid the [Same-origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) limitations.
@@ -116,7 +118,7 @@ Ub1 preprocesses your pages adding support for the `<ub1-include>` tag, e.g.:
 
 Where `inc/style.html` could be:
 
-    <lib note="styles for Includes.html">
+    <lib note="sample include file">
         <style>
             body {
                 color: red;

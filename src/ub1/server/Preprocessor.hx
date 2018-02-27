@@ -37,7 +37,7 @@ using StringTools;
 class Preprocessor {
 	public static inline var MAXNESTING = 100;
 	public static inline var TRANSPARENT_TAGNAME = 'ub1-group';
-	public static inline var ESCAPED_TAGNAME = 'escaped';
+	public static inline var ESCAPED_TAGNAME = 'ub1-escaped';
 	public static inline var ESCAPED_TABSPACESATTR = 'tabspaces';
 	public static inline var INCLUDE_TAGNAME = 'ub1-include';
 	public static inline var INCLUDE_NAMEATTR = 'href';
@@ -249,8 +249,8 @@ class Preprocessor {
 	}
 
 	function fillMacro(e:HtmlNodeElement,
-					   clones:Array<HtmlNode>,
-					   slots:Map<String,MacroSlot>) {
+	                   clones:Array<HtmlNode>,
+	                   slots:Map<String,MacroSlot>) {
 		var nn:Array<HtmlNode> = e.nodes.slice(0);
 		for (n in nn) {
 			var slotName = DEFAULTSLOT_NAME;

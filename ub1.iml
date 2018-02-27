@@ -3,7 +3,7 @@
   <component name="HaxeModuleSettingsStorage">
     <option name="buildConfig" value="1" />
     <option name="hxmlPath" value="$MODULE_DIR$/build.hxml" />
-    <option name="outputFolder" value="$MODULE_DIR$/out/production/ub1" />
+    <option name="outputFolder" value="/dev/null/production/ub1" />
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/docroot/__ub1/client/bin" />
       <excludeFolder url="file://$MODULE_DIR$/docroot/__ub1/php" />
+      <excludeFolder url="file://$MODULE_DIR$/docroot/__ub1/sites/ub1devel/res" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

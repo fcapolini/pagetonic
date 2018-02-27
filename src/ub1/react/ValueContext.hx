@@ -24,51 +24,51 @@ package ub1.react;
 class ValueContext {
 	public static inline var DID_UPDATE_EVENT = 1;
 	public static inline var UID_PREFIX = '__uid__';
-    public var main(get,null): ValueScope;
-    public var cycle(default,null) = 0;
+	public var main(get,null): ValueScope;
+	public var cycle(default,null) = 0;
 	public var cycleTime(default,null) = 0.0;
-    public var isRefreshing: Bool;
-    public var uidCount: Int;
-    public var scopeUidCount: Int;
-    public var interp: ValueInterp;
-    public var stack: Array<Value>;
+	public var isRefreshing: Bool;
+	public var uidCount: Int;
+	public var scopeUidCount: Int;
+	public var interp: ValueInterp;
+	public var stack: Array<Value>;
 	public var applyList(default,null): Array<Void->Void>;
 	public var owner: Dynamic;
 
-    public function new(?owner:Dynamic) {
-        reset(owner);
-    }
-    
-    public function dispose(): ValueContext {
-        // nop
-        return null;
-    }
-    
-    public inline function get_main() {
-        return interp.mainScope;
-    }
-    
-    public function setGlobal(key:String, val:Dynamic) {
-        interp.variables.set(key, val);
-    }
-    
-    public function getGlobal(key:String): Dynamic {
-        return interp.variables.get(key);
-    }
-    
-    public function newScope(?parent:ValueScope,
-							 ?id:String,
-							 ?name:String,
-							 ?owner:Dynamic): ValueScope {
-        var ret = new ValueScope(this, parent, newScopeUid(), owner);
-        if (id != null) {
-            main.set(id, ret);
-            parent != null && name == null ? parent.set(id, ret) : null;
-        } else if (parent != null && name != null) {
-            parent.set(name, ret);
-        }
-        return ret;
-    }
+	public function new(?owner:Dynamic) {
+		reset(owner);
+	}
+
+	public function dispose(): ValueContext {
+		// nop
+		return null;
+	}
+
+	public inline function get_main() {
+		return interp.mainScope;
+	}
+
+	public function setGlobal(key:String, val:Dynamic) {
+		interp.variables.set(key, val);
+	}
+
+	public function getGlobal(key:String): Dynamic {
+		return interp.variables.get(key);
+	}
+
+	public function newScope(?parent:ValueScope,
+	                         ?id:String,
+	                         ?name:String,
+	                         ?owner:Dynamic): ValueScope {
+		var ret = new ValueScope(this, parent, newScopeUid(), owner);
+		if (id != null) {
+			main.set(id, ret);
+			parent != null && name == null ? parent.set(id, ret) : null;
+		} else if (parent != null && name != null) {
+			parent.set(name, ret);
+		}
+		return ret;
+	}
 
 	@:access(ub1.react.ValueScope)
 	public function refresh(?scope:ValueScope, ?cb:Void->Void) {
@@ -107,30 +107,30 @@ class ValueContext {
 		}
 	}
 
-    public function reset(?owner:Dynamic) {
-        cycle = 0;
-        isRefreshing = false;
-        scopeUidCount = uidCount = 0;
-        if (interp == null) {
+	public function reset(?owner:Dynamic) {
+		cycle = 0;
+		isRefreshing = false;
+		scopeUidCount = uidCount = 0;
+		if (interp == null) {
 			var id = newScopeUid();
-            interp = new ValueInterp(new ValueScope(this, null, id, null, owner));
-        } else {
-            interp.reset();
-        }
-        stack = new Array<Value>();
-        pushNesting = 0;
+			interp = new ValueInterp(new ValueScope(this, null, id, null, owner));
+		} else {
+			interp.reset();
+		}
+		stack = new Array<Value>();
+		pushNesting = 0;
 		applyList = [];
 		this.owner = owner;
-    }
-    
-    public function newScopeUid(): String {
-        var ret = '__scope__${scopeUidCount++}';
-        return ret;
-    }
-    
-    public inline function newUid(): String {
-        return '${UID_PREFIX}${uidCount++}';
-    }
+	}
+
+		public function newScopeUid(): String {
+			var ret = '__scope__${scopeUidCount++}';
+			return ret;
+		}
+
+	public inline function newUid(): String {
+		return '${UID_PREFIX}${uidCount++}';
+	}
 
 	public inline function enterValuePush(): Int {
 		var ret = ++pushNesting;
@@ -172,10 +172,10 @@ class ValueContext {
 	var delayedCalls(default,null) = new Array<Void->Void>();
 
 	inline public function delayedSet(uid:String,
-									  obj:ValueScope,
-									  key:String,
-									  val:Dynamic,
-									  ?cb:Void->Void) {
+	                                  obj:ValueScope,
+	                                  key:String,
+	                                  val:Dynamic,
+	                                  ?cb:Void->Void) {
 		if (isRefreshing) {
 			delayedSets.set(uid, {obj:obj, key:key, val:val, cb:cb});
 		} else {

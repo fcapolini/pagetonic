@@ -34,32 +34,32 @@ typedef ValueCallback = Dynamic->String->Dynamic->Void;
 
 class Value extends DoubleLinkedItem {
 	public static inline var MAX_DEPENDENCY_DEPTH = 100;
-    public var name: String;
-    public var nativeName: String;
-    public var scope: ValueScope;
-    public var uid: String;
-    public var source: String;
+	public var name: String;
+	public var nativeName: String;
+	public var scope: ValueScope;
+	public var uid: String;
+	public var source: String;
 	public var value: Dynamic;
 	public var prevValue: Dynamic; // only valid during `cb` calls
 	public var valueFn: Void->Dynamic;
-    public var cycle: Int;
-    public var userdata: Dynamic;
-    public var cb: ValueCallback;
+	public var cycle: Int;
+	public var userdata: Dynamic;
+	public var cb: ValueCallback;
 	public var first = true;
 
-    public function new(value:Dynamic,
-                        name:Null<String>,
-                        nativeName:Null<String>,
-                        scope:ValueScope,
-                        ?userdata:Dynamic,
-                        ?cb:ValueCallback,
-                        callOnNull=true,
-						?valueFn:Void->Dynamic) {
-	    super();
-        this.uid = scope.context.newUid();
-        this.name = (name != null ? name : uid);
-        this.nativeName = nativeName;
-        this.scope = scope;
+	public function new(value:Dynamic,
+	                    name:Null<String>,
+	                    nativeName:Null<String>,
+	                    scope:ValueScope,
+	                    ?userdata:Dynamic,
+	                    ?cb:ValueCallback,
+	                    callOnNull=true,
+	                    ?valueFn:Void->Dynamic) {
+		super();
+		this.uid = scope.context.newUid();
+		this.name = (name != null ? name : uid);
+		this.nativeName = nativeName;
+		this.scope = scope;
 		this.userdata = userdata;
 		reset(value, cb, callOnNull, valueFn);
 		scope.addValue(this);
@@ -145,28 +145,28 @@ class Value extends DoubleLinkedItem {
 		this.cb = (callOnNull ? cb : function(u,n,v) if (v != null) cb(u,n,v));
 	}
 
-    public function dispose(): Value {
+	public function dispose(): Value {
 		scope.removeValue(this);
 		return null;
-    }
-    
-    public inline function isDynamic(): Bool {
-        return (exp != null || valueFn != null);
-    }
-    
-    public function get(): Dynamic {
-        Ub1Log.value('${name}.get()');
-	    refresh();
-        if (scope.context.isRefreshing) {
-            // while refreshing, get() performs a "dependencies pull"
-            var v:Value = scope.context.stack.peek();
-            if (v != null) {
-                // we're being pulled by a dynamic value: make it observe us
-                addObserver(v.observer);
-            }
-        }
-        return value;
-    }
+	}
+
+	public inline function isDynamic(): Bool {
+		return (exp != null || valueFn != null);
+	}
+
+	public function get(): Dynamic {
+		Ub1Log.value('${name}.get()');
+		refresh();
+		if (scope.context.isRefreshing) {
+			// while refreshing, get() performs a "dependencies pull"
+			var v:Value = scope.context.stack.peek();
+			if (v != null) {
+				// we're being pulled by a dynamic value: make it observe us
+				addObserver(v.observer);
+			}
+		}
+		return value;
+	}
 
 	public function get0() {cycle = 0; get();}
 	public function get1(_) {cycle = 0; get();}
@@ -178,67 +178,67 @@ class Value extends DoubleLinkedItem {
 		}
 	}
 
-    public function set(v:Dynamic) {
-        Ub1Log.value('${name}.set("$v")');
-        var oldValue = value;
-        if (_set(v) && !scope.context.isRefreshing) {
-            // while not refreshing, set() performs a "dependencies push"
+	public function set(v:Dynamic) {
+		Ub1Log.value('${name}.set("$v")');
+		var oldValue = value;
+		if (_set(v) && !scope.context.isRefreshing) {
+			// while not refreshing, set() performs a "dependencies push"
 			var depth = scope.context.enterValuePush();
 			if (depth == 1) {
 				scope.context.nextCycle();
 				cycle = scope.context.cycle;
 			}
 			if (depth <= MAX_DEPENDENCY_DEPTH && observable != null) {
-	            observable.notifyObservers(this, oldValue);
+				observable.notifyObservers(this, oldValue);
 			}
 			scope.context.exitValuePush();
-        }
-    }
-    
-    public function clearObservers() {
-        if (observable != null) {
-            observable.clearObservers();
-        }
-    }
-    
-    public inline function refresh(force=false) {
-        Ub1Log.value('${name}.refresh()');
-        if (cycle != scope.context.cycle || force) {
-            cycle = scope.context.cycle;
-            if (isDynamic()) {
-                if (scope.context.isRefreshing) {
-                    //
-                    // By executing our expression, we might call other
-                    // values' get() methods: by pushing ourselves onto the stack
-                    // they can trace us as dependent on them and add us to their
-                    // list of observers (they "pull" our dependency).
-                    //
-                    // Outside of refresh cycles, observers are notified by the
-                    // set() method when a value changes, thus propagating the
-                    // change to all dependent values (it "pushes" the change).
-                    //
-                    scope.context.stack.push(this);
-                }
-                try {
-                    var v = null;
+		}
+	}
+
+	public function clearObservers() {
+		if (observable != null) {
+			observable.clearObservers();
+		}
+	}
+
+	public inline function refresh(force=false) {
+		Ub1Log.value('${name}.refresh()');
+		if (cycle != scope.context.cycle || force) {
+			cycle = scope.context.cycle;
+			if (isDynamic()) {
+				if (scope.context.isRefreshing) {
+					//
+					// By executing our expression, we might call other
+					// values' get() methods: by pushing ourselves onto the stack
+					// they can trace us as dependent on them and add us to their
+					// list of observers (they "pull" our dependency).
+					//
+					// Outside of refresh cycles, observers are notified by the
+					// set() method when a value changes, thus propagating the
+					// change to all dependent values (it "pushes" the change).
+					//
+					scope.context.stack.push(this);
+				}
+				try {
+					var v = null;
 					if (valueFn != null) {
 						v = valueFn();
 					} else {
 						v = scope.context.interp.evaluate(exp, scope);
 					}
-                    Ub1Log.value('${name}.refresh(): $v');
-                    set(v);
-                } catch (ex:Dynamic) {
-                    Ub1Log.value('${name}.refresh() error: $ex');
-                }
-                if (scope.context.isRefreshing) {
-                    scope.context.stack.pop();
-                }
-            } else if (first) {
-				_set(value);
+					Ub1Log.value('${name}.refresh(): $v');
+					set(v);
+				} catch (ex:Dynamic) {
+					Ub1Log.value('${name}.refresh() error: $ex');
+				}
+				if (scope.context.isRefreshing) {
+					scope.context.stack.pop();
+				}
+			} else if (first) {
+			_set(value);
 			}
-        }
-    }
+		}
+	}
 
 	public inline function setObservableCallback(cb:Int->Void) {
 		if (observable == null) {
@@ -247,46 +247,46 @@ class Value extends DoubleLinkedItem {
 		observable.setCallback(cb);
 	}
 
-    // =========================================================================
-    // public static
-    // =========================================================================
-    public static var parser = new Parser();
+	// =========================================================================
+	// public static
+	// =========================================================================
+	public static var parser = new Parser();
 
-    public static inline function isConstantExpression(s:String): Bool {
-        return ValueParser.isConstantExpression(s);
-    }
-    
-    // =========================================================================
-    // private
-    // =========================================================================
-    var observable: Observable;
-    var exp: Expr;
+	public static inline function isConstantExpression(s:String): Bool {
+		return ValueParser.isConstantExpression(s);
+	}
 
-    function _set(v:Dynamic): Bool {
-        if (v != value || first) {
+	// =========================================================================
+	// private
+	// =========================================================================
+	var observable: Observable;
+	var exp: Expr;
+
+	function _set(v:Dynamic): Bool {
+		if (v != value || first) {
 //			trace('${untyped scope.owner.e.className}.$name._set($v)');//tempdebug
 			prevValue = value;
-            value = v;
-            first = false;
+			value = v;
+			first = false;
 			cb != null ? cb(userdata, nativeName, v) : null;
 			prevValue = null;
-            return true;
-        }
-        return false;
-    }
+			return true;
+		}
+		return false;
+	}
 
 	// called only at `push` time (i.e. outside of refreshes)
-    function observer(s:Value, oldValue:Dynamic) {
-        Ub1Log.value('${name}.observer() old: "$oldValue", new: "${s.value}"');
-        get();
-    }
+	function observer(s:Value, oldValue:Dynamic) {
+		Ub1Log.value('${name}.observer() old: "$oldValue", new: "${s.value}"');
+		get();
+	}
 
 	// called only at `pull` time (i.e. during refreshes)
-    inline function addObserver(o:Observer) {
-        if (observable == null) {
-            observable = new Observable();
-        }
-        observable.addObserver(o);
-    }
-    
+	inline function addObserver(o:Observer) {
+		if (observable == null) {
+			observable = new Observable();
+		}
+		observable.addObserver(o);
+	}
+
 }

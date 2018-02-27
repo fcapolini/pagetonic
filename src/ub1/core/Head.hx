@@ -21,6 +21,8 @@
 
 package ub1.core;
 
+import ub1.util.ArrayTool;
+import ub1.web.DomTools;
 import ub1.web.ColorTools;
 using StringTools;
 using ub1.util.ArrayTool;

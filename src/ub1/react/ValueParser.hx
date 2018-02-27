@@ -25,10 +25,10 @@ import ub1.Ub1Log;
 
 //TODO strip line and block comments from expression
 class ValueParser {
-    static public inline var LF_PLACEHOLDER = '__LINEFEED__';
-    //NOTE not thread safe:
-    static public var FUNCTION_RE = ~/^\${(\((.*?)\):)?function\((.*?)\)\s*{\s*(.*?)\s*}\s*}$/;
-    static public var USE_STRING_FUNCTION = true;
+	static public inline var LF_PLACEHOLDER = '__LINEFEED__';
+	//NOTE not thread safe:
+	static public var FUNCTION_RE = ~/^\${(\((.*?)\):)?function\((.*?)\)\s*{\s*(.*?)\s*}\s*}$/;
+	static public var USE_STRING_FUNCTION = true;
 	static var EXP_MARKER_START = "$";
 	static var EXP_MARKER1 = "$"+"{";
 	static var EXP_MARKER1_CODE = 1;
@@ -111,12 +111,12 @@ class ValueParser {
 		return isDynamic;
 	}
 
-    public inline static function patchLF(s:String) {
-        return s != null ? s.split('\n').join(LF_PLACEHOLDER) : null;
-    }
-    
-    public inline static function unpatchLF(s:String) {
-        return s != null ? s.split(LF_PLACEHOLDER).join('\n') : null;
-    }
-    
+	public inline static function patchLF(s:String) {
+		return s != null ? s.split('\n').join(LF_PLACEHOLDER) : null;
+	}
+
+	public inline static function unpatchLF(s:String) {
+		return s != null ? s.split(LF_PLACEHOLDER).join('\n') : null;
+	}
+
 }

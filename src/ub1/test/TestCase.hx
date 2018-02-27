@@ -122,14 +122,14 @@ class TestCase implements Logger {
 				name: testname,
 				result: (msg != null ? msg : '$actual != $expected')
 			});
-    		#if php
+			#if php
 			throw new UnblockedException('skip-test');
-	    	#end
-        #if (php || java)
-        }
-        #else
-        }
-        #end
+			#end
+		#if (php || java)
+		}
+		#else
+		}
+		#end
 	}
 
 	public function assertNot(actual:Dynamic, expected:Dynamic, ?msg:String) {
@@ -142,103 +142,103 @@ class TestCase implements Logger {
 				name: testname,
 				result: (msg != null ? msg : '$actual == $expected')
 			});
-    		#if php
+			#if php
 			throw new UnblockedException('skip-test');
-	    	#end
-        #if (php || java)
-        }
-        #else
-        }
-        #end
+			#end
+		#if (php || java)
+		}
+		#else
+		}
+		#end
 	}
 
-    public function assertHtml(actual:String, expected:String, ?msg:String) {
-        if (actual == null && expected == null) {
-            return;
-        }
-        var dom1:Array<HtmlNode> = null;
-        var dom2:Array<HtmlNode> = null;
-        try {
-            dom1 = HtmlParser.run(actual, true);
-        } catch (ex:Dynamic) {
-            results.push({name:testname, result:'invalid actual HTML'});
-            #if php
-            throw new UnblockedException('skip-test');
-            #end
-            return;
-        }
-        try {
-            dom2 = HtmlParser.run(expected, true);
-        } catch (ex:Dynamic) {
-            results.push({name:testname, result:'invalid expected HTML'});
-            #if php
-            throw new UnblockedException('skip-test');
-            #end
-            return;
-        }
-        if (!compareHtml(dom1, dom2)) {
-            var result = (msg != null ? msg : '$actual == $expected');
-            results.push({
-                name: testname,
-                result: result.htmlEscape()
-            });
-            #if php
-            throw new UnblockedException('skip-test');
-            #end
-        }
-    }
+	public function assertHtml(actual:String, expected:String, ?msg:String) {
+		if (actual == null && expected == null) {
+			return;
+		}
+		var dom1:Array<HtmlNode> = null;
+		var dom2:Array<HtmlNode> = null;
+		try {
+			dom1 = HtmlParser.run(actual, true);
+		} catch (ex:Dynamic) {
+			results.push({name:testname, result:'invalid actual HTML'});
+			#if php
+			throw new UnblockedException('skip-test');
+			#end
+			return;
+		}
+		try {
+			dom2 = HtmlParser.run(expected, true);
+		} catch (ex:Dynamic) {
+			results.push({name:testname, result:'invalid expected HTML'});
+			#if php
+			throw new UnblockedException('skip-test');
+			#end
+			return;
+		}
+		if (!compareHtml(dom1, dom2)) {
+			var result = (msg != null ? msg : '$actual == $expected');
+			results.push({
+				name: testname,
+				result: result.htmlEscape()
+			});
+			#if php
+			throw new UnblockedException('skip-test');
+			#end
+		}
+	}
 
-    function compareHtml(dom1:Array<HtmlNode>, dom2:Array<HtmlNode>): Bool {
-        if (dom1.length != dom2.length) {
-            return false;
-        }
-        for (i in 0...dom1.length) {
-            var node1 = dom1[i];
-            var node2 = dom2[i];
-            if (!compareHtmlNode(node1, node2)) {
-                return false;
-            }
-        }
-        return true;
-    }
+	function compareHtml(dom1:Array<HtmlNode>, dom2:Array<HtmlNode>): Bool {
+		if (dom1.length != dom2.length) {
+			return false;
+		}
+		for (i in 0...dom1.length) {
+			var node1 = dom1[i];
+			var node2 = dom2[i];
+			if (!compareHtmlNode(node1, node2)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-    function compareHtmlNode(node1:HtmlNode, node2:HtmlNode): Bool {
-        if (Std.is(node1, HtmlNodeElement) != Std.is(node2, HtmlNodeElement)) {
-            return false;
-        }
-        if (Std.is(node1, HtmlNodeElement)) {
-            var element1:HtmlNodeElement = cast node1;
-            var element2:HtmlNodeElement = cast node2;
-            if (element1.attributes.length != element2.attributes.length) {
-                return false;
-            }
-            for (attr1 in element1.attributes) {
-                if (!element2.hasAttribute(attr1.name)) {
-                    return false;
-                }
-                if (attr1.value != element2.getAttribute(attr1.name)) {
-                    return false;
-                }
-            }
-            if (element1.children.length != element1.children.length) {
-                return false;
-            }
-            for (i in 0...element1.children.length) {
-                var child1 = element1.children[i];
-                var child2 = element2.children[i];
-                if (!compareHtmlNode(child1, child2)) {
-                    return false;
-                }
-            }
-        } else {
-            var s1 = ~/(\s+)/.replace(node1.toText(), ' ');
-            var s2 = ~/(\s+)/.replace(node2.toText(), ' ');
-            if (s1 != s2) {
-                return false;
-            }
-        }
-        return true;
-    }
+	function compareHtmlNode(node1:HtmlNode, node2:HtmlNode): Bool {
+		if (Std.is(node1, HtmlNodeElement) != Std.is(node2, HtmlNodeElement)) {
+			return false;
+		}
+		if (Std.is(node1, HtmlNodeElement)) {
+			var element1:HtmlNodeElement = cast node1;
+			var element2:HtmlNodeElement = cast node2;
+			if (element1.attributes.length != element2.attributes.length) {
+				return false;
+			}
+			for (attr1 in element1.attributes) {
+				if (!element2.hasAttribute(attr1.name)) {
+					return false;
+				}
+				if (attr1.value != element2.getAttribute(attr1.name)) {
+					return false;
+				}
+			}
+			if (element1.children.length != element1.children.length) {
+				return false;
+			}
+			for (i in 0...element1.children.length) {
+				var child1 = element1.children[i];
+				var child2 = element2.children[i];
+				if (!compareHtmlNode(child1, child2)) {
+					return false;
+				}
+			}
+		} else {
+			var s1 = ~/(\s+)/.replace(node1.toText(), ' ');
+			var s2 = ~/(\s+)/.replace(node2.toText(), ' ');
+			if (s1 != s2) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public function exception(e:Dynamic) {
 		#if php
@@ -310,7 +310,7 @@ class TestCase implements Logger {
 	}
 
 	public function requestTestData(methodName:String,
-									?args:Dynamic): String {
+	                                ?args:Dynamic): String {
 		var url = testDataUrl(methodName);
 		if (args != null) {
 			var sb = new StringBuf();

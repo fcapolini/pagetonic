@@ -1,9 +1,9 @@
 <html>
 <head>
 	<style>
-        body {font-family: sans-serif}
-        body * {margin-bottom: 8px}
-    </style>
+		body {font-family: sans-serif}
+		body * {margin-bottom: 8px}
+	</style>
 </head>
 <body :text1="-"
       :text2="-">
@@ -15,8 +15,8 @@
 	        :ev_click="${count++}"
 	        :on_count="${text1 = 'on_count says: ' + count}"
 	        :countHandler="${(count):function() {
-                text2 = 'countHandler says: ' + count;
-            }}">
+	            text2 = 'countHandler says: ' + count;
+	        }}">
 		Click me
 	</button>
 

@@ -23,12 +23,12 @@ package ub1.util;
 
 class MapTool {
 
-    public static function mapCopy(src:Map<String,Dynamic>,
-                                   dst:Map<String,Dynamic>) {
-        for (key in src.keys()) {
-            dst.set(key, src.get(key));
-        }
-    }
+	public static function mapCopy(src:Map<String,Dynamic>,
+	                               dst:Map<String,Dynamic>) {
+		for (key in src.keys()) {
+			dst.set(key, src.get(key));
+		}
+	}
 
 	public static function mapIsEmpty(map:Map<String,Dynamic>): Bool {
 		if (map != null) {

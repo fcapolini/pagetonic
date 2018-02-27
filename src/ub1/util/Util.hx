@@ -27,9 +27,9 @@ class Util {
 	//http://stackoverflow.com/a/15123777
 	static var comments = ~/(?:\/\*(?:[\s\S]*?)\*\/)|(?:([\s;])+\/\/(?:.*)$)/gm;
 
-    public static inline function areEqual(a:Dynamic, b:Dynamic): Bool {
-        return (a == null ? b == null : a == b);
-    }
+	public static inline function areEqual(a:Dynamic, b:Dynamic): Bool {
+		return (a == null ? b == null : a == b);
+	}
 
 	public static function cleanScriptSource(s:String): String {
 		//TODO s = StringTools.trim(comments.replace(s, ''));
@@ -167,15 +167,15 @@ class Util {
 		return map;
 	}
 
-    public static function unparseStyles(map:Map<String, String>): String {
-        var sb = new StringBuf();
-        var sep = '';
-        for (key in map.keys()) {
-            sb.add(sep); sep = ';';
-            sb.add(key); sb.add(':'); sb.add(map.get(key));
-        }
-        return sb.toString();
-    }
+	public static function unparseStyles(map:Map<String, String>): String {
+		var sb = new StringBuf();
+		var sep = '';
+		for (key in map.keys()) {
+			sb.add(sep); sep = ';';
+			sb.add(key); sb.add(':'); sb.add(map.get(key));
+		}
+		return sb.toString();
+	}
 
 	// for IE6 compatibility
 	public static function split(s:String, delim:String): Array<String> {

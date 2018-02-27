@@ -21,6 +21,8 @@
 
 package ub1.server;
 
+import ub1.util.PropertyTool;
+import ub1.web.DomTools;
 import ub1.util.Url;
 import htmlparser.*;
 import ub1.core.*;
@@ -34,7 +36,7 @@ class Loader {
 	public static function loadPage(src:HtmlDocument,
 	                                ?dst:DomDocument,
 	                                ?rootpath:String,
-									?uri:String): ServerPage {
+	                                ?uri:String): ServerPage {
 		dst == null ? dst = DomTools.defaultDocument() : null;
 		var ret = loadRoot(dst, src, rootpath, uri);
 		return ret;
@@ -64,7 +66,7 @@ class Loader {
 	static function loadRoot(doc:DomDocument,
 	                         src:HtmlDocument,
 	                         rootpath:String,
-							 uri='/'): Page {
+	                         uri='/'): Page {
 		var e = src.children[0];
 		var props = loadProps(e, false);
 		props.set(Page.FSPATH_PROP, rootpath);

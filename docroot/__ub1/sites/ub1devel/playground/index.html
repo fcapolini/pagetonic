@@ -118,36 +118,36 @@
 			</div>
 
 			<div class="bottom-bar">
-			     <div :content="$data{text:/text/text()}"
-			          :innerHtml="${window.converter.makeHtml(content)}"
-			          :innerHtmlHandler="${(innerHtml):function() {
-			            //dom.style.opacity = '0';
+				<div :content="$data{text:/text/text()}"
+				      :innerHtml="${window.converter.makeHtml(content)}"
+				      :innerHtmlHandler="${(innerHtml):function() {
+				        //dom.style.opacity = '0';
 				        Timer.delay(doPatch, 0);
 				      }}"
-			          :doPatch="${function() {
+				      :doPatch="${function() {
 				        var ee = dom.getElementsByTagName('pre');
 				        // https://github.com/ajaxorg/ace/wiki/Configuring-Ace
 				        for (i in 0...ee.length) {
 				            ee[i].style.height = ee[i].clientHeight + 'px';
-							var editor = window.ace.edit(ee[i]);
-							editor.setOptions({
-								selectionStyle: 'text',
-								fontSize: 11,
-								readOnly: true,
-								showGutter: false,
-								showPrintMargin: false,
-								highlightActiveLine: false,
-								behavioursEnabled: false,
-								theme: 'ace/theme/chrome',
-								mode: 'ace/mode/php',
-							});
-							var s = editor.session.getValue();
-							editor.session.setValue(trim(s));
-							//so matching closing tag isn't highlighted
-							editor.navigateLineEnd();
-							// https://stackoverflow.com/a/32806309
-							var l = editor.renderer['$cursorLayer'].element;
-							l.style.display = 'none';
+				            var editor = window.ace.edit(ee[i]);
+				            editor.setOptions({
+				                selectionStyle: 'text',
+				                fontSize: 11,
+				                readOnly: true,
+				                showGutter: false,
+				                showPrintMargin: false,
+				                highlightActiveLine: false,
+				                behavioursEnabled: false,
+				                theme: 'ace/theme/chrome',
+				                mode: 'ace/mode/php',
+				            });
+				            var s = editor.session.getValue();
+				            editor.session.setValue(trim(s));
+				            //so matching closing tag isn't highlighted
+				            editor.navigateLineEnd();
+				            // https://stackoverflow.com/a/32806309
+				            var l = editor.renderer['$cursorLayer'].element;
+				            l.style.display = 'none';
 				        }
 				        //dom.style.opacity = null;
 				     }}"/>

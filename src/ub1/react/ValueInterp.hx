@@ -33,9 +33,9 @@ class ValueInterp extends Interp {
     public var mainScope: ValueScope;
     
 	public function new(mainScope:ValueScope) {
-	    super();
-	    this.mainScope = mainScope;
-        variables.set('string', function(v:Dynamic): String {
+		super();
+		this.mainScope = mainScope;
+		variables.set('string', function(v:Dynamic): String {
 			return v != null ? Std.string(v) : '';
 		});
 		variables.set('trim', function(v:Dynamic): String {
@@ -58,7 +58,7 @@ class ValueInterp extends Interp {
 			return v != null ? '$v'.toLowerCase() : '';
 		});
 		variables.set('capitalize', function(s:String): String {
-		    s == null ? s = '' : s;
+			s == null ? s = '' : s;
 			return ~/((^\w)|(\s+\w))/g.map(s, function(re:EReg): String {
 				return re.matched(1).toUpperCase();
 			});
@@ -66,49 +66,49 @@ class ValueInterp extends Interp {
 		variables.set('regex', function(v:Dynamic, opt=''): EReg {
 			return v != null ? new EReg(Std.string(v), opt) : null;
 		});
-		variables.set('stringSort', ArrayTool.stringSort);
+		variables.set('stringSort', ub1.util.ArrayTool.stringSort);
 		variables.set('Math', Math);
 		variables.set('String', String);
-	    variables.mapCopy(resetVars);
+		variables.mapCopy(resetVars);
 	}
-    
-    public function reset() {
-	    mainScope.reset();
-        variables = new Map<String,Dynamic>();
-        resetVars.mapCopy(variables);
-        currentScope = null;
-    }
-    
-    public inline function evaluate(exp:Expr, scope:ValueScope): Dynamic {
-        var ret = null;
-        var old = currentScope;
-        currentScope = scope;
-        try {
-            ret = execute(exp);
-        } catch (ex:Dynamic) {
-            currentScope = old;
-            throw ex;
-        }
-        currentScope = old;
-        return ret;
-    }
-    
-    public inline function evaluateWith(exp:Expr,
-                                        scope:ValueScope,
-                                        locals:Map<String,Dynamic>): Dynamic {
-        var ret = null;
-        var old = currentScope;
-        currentScope = scope;
-        try {
-            ret = executeWith(exp, locals);
-        } catch (ex:Dynamic) {
-            currentScope = old;
-            throw ex;
-        }
-        currentScope = old;
-        return ret;
-    }
-    
+
+	public function reset() {
+		mainScope.reset();
+		variables = new Map<String,Dynamic>();
+		resetVars.mapCopy(variables);
+		currentScope = null;
+	}
+
+	public inline function evaluate(exp:Expr, scope:ValueScope): Dynamic {
+		var ret = null;
+		var old = currentScope;
+		currentScope = scope;
+		try {
+			ret = execute(exp);
+		} catch (ex:Dynamic) {
+			currentScope = old;
+			throw ex;
+		}
+		currentScope = old;
+		return ret;
+	}
+
+	public inline function evaluateWith(exp:Expr,
+	                                    scope:ValueScope,
+	                                    locals:Map<String,Dynamic>): Dynamic {
+		var ret = null;
+		var old = currentScope;
+		currentScope = scope;
+		try {
+			ret = executeWith(exp, locals);
+		} catch (ex:Dynamic) {
+			currentScope = old;
+			throw ex;
+		}
+		currentScope = old;
+		return ret;
+	}
+
 	public inline function executeWith(expr:Expr,
 	                                   locals:Map<String,Dynamic>): Dynamic {
 		depth = 0;
@@ -117,13 +117,13 @@ class ValueInterp extends Interp {
 		return exprReturn(expr);
 	}
 
-    // =========================================================================
-    // private
-    // =========================================================================
-    var resetVars = new Map<String,Dynamic>();
-    var currentScope: ValueScope;
-    
-    override function assign(e1:Expr, e2:Expr): Dynamic {
+	// =========================================================================
+	// private
+	// =========================================================================
+	var resetVars = new Map<String,Dynamic>();
+	var currentScope: ValueScope;
+
+	override function assign(e1:Expr, e2:Expr): Dynamic {
 		var v = expr(e2);
 		switch (edef(e1)) {
 		case EIdent(id):
@@ -153,10 +153,11 @@ class ValueInterp extends Interp {
 // 			} else
 // 				if( l == null ) variables.set(id,v + delta) else l.r = v + delta;
 // 			return v;
-            var v = resolve(id);
-            var ret = (prefix ? (v + delta) : v);
-            _resolveWrite(id, v + delta);
-            return v;
+			var v = resolve(id);
+			//TODO: test preincrement/postincrement
+			var ret = (prefix ? (v + delta) : v);
+			_resolveWrite(id, v + delta);
+			return v;
 		case EField(e,f):
 			var obj = expr(e);
 			var v : Dynamic = get(obj,f);
@@ -180,90 +181,90 @@ class ValueInterp extends Interp {
 			return error(EInvalidOp((delta > 0)?"++":"--"));
 		}
 	}
-	
-    inline function _resolveWrite(id:String, v:Dynamic) {
-        // local vars
+
+	inline function _resolveWrite(id:String, v:Dynamic) {
+		// local vars
 		var l = locals.get(id);
 		if (l != null) {
 			l.r = v;
 		} else {
-            // scope values
-            var done = false;
-            var scope:ValueScope;
-            if ((scope = currentScope) != null) {
-                do {
-                    if (scope.values.exists(id)) {
-                        scope.set(id, v);
-                        done = true;
-                    }
-                } while (!done && (scope = scope.parent) != null);
-            }
-            // global vars
-            if (!done) {
-                variables.set(id, v);
-            }
+			// scope values
+			var done = false;
+			var scope:ValueScope;
+			if ((scope = currentScope) != null) {
+				do {
+					if (scope.values.exists(id)) {
+						scope.set(id, v);
+						done = true;
+					}
+				} while (!done && (scope = scope.parent) != null);
+			}
+			// global vars
+			if (!done) {
+				variables.set(id, v);
+			}
 		}
-    }
-    
-    override function resolve(id:String): Dynamic {
-        var ret = _resolveRead(id);
-        if (Std.is(ret, Value)) {
-            var locals = this.locals;
-            ret = cast(ret, Value).get();
-            this.locals = locals;
-        }
-        Ub1Log.valueInterp('resolve($id): $ret');
-        return ret;
-    }
+	}
 
-    function _resolveRead(id:String): Dynamic {
-        var scope:ValueScope;
-        
-        // local vars
-        if (locals.exists(id)) {
-//            return locals.get(id); //.r;
-	        var v = locals.get(id);
-	        v != null && v.r != null ? v = v.r : null;
-	        return v;
-        }
-        
-        // scope values
-        if ((scope = currentScope) != null) {
-            do {
-                if (scope.values.exists(id)) {
-                    return untyped scope.values.get(id);
-                }
-            } while ((scope = scope.parent) != null);
-        }
-        
-        // global vars
-        if (variables.exists(id)) {
-            return variables.get(id);
-        }
-        
-//        error(EUnknownVariable(id));
-//        // unreachable since error() throws an exception
-        return null;
-    }
-    
-    override function get(o:Dynamic, f:String): Dynamic {
-        var ret:Dynamic = null;
-        if (Std.is(o,ValueScope) && untyped o.values.exists(f)) {
-            ret = untyped o.values.get(f).get();
-        } else {
-            ret = super.get(o, f);
-        }
-        Ub1Log.valueInterp('get($f): $ret');
-        return ret;
+	override function resolve(id:String): Dynamic {
+		var ret = _resolveRead(id);
+		if (Std.is(ret, Value)) {
+			var locals = this.locals;
+			ret = cast(ret, Value).get();
+			this.locals = locals;
+		}
+		Ub1Log.valueInterp('resolve($id): $ret');
+		return ret;
 	}
-	
+
+	function _resolveRead(id:String): Dynamic {
+		var scope:ValueScope;
+
+		// local vars
+		if (locals.exists(id)) {
+//			return locals.get(id); //.r;
+			var v = locals.get(id);
+			v != null && v.r != null ? v = v.r : null;
+			return v;
+		}
+
+		// scope values
+		if ((scope = currentScope) != null) {
+			do {
+				if (scope.values.exists(id)) {
+					return untyped scope.values.get(id);
+				}
+			} while ((scope = scope.parent) != null);
+		}
+
+		// global vars
+		if (variables.exists(id)) {
+			return variables.get(id);
+		}
+
+//		error(EUnknownVariable(id));
+//		// unreachable since error() throws an exception
+		return null;
+	}
+
+	override function get(o:Dynamic, f:String): Dynamic {
+		var ret:Dynamic = null;
+		if (Std.is(o,ValueScope) && untyped o.values.exists(f)) {
+			ret = untyped o.values.get(f).get();
+		} else {
+			ret = super.get(o, f);
+		}
+		Ub1Log.valueInterp('get($f): $ret');
+		return ret;
+	}
+
 	override function set(o:Dynamic, f:String, v:Dynamic): Dynamic {
-        Ub1Log.valueInterp('set($f): $v');
-        if (Std.is(o, ValueScope)) {
-            untyped o.set(f, v);
-            return v;
-        }
-        return super.set(o, f, v);
+		Ub1Log.valueInterp('set($f): $v');
+		if (Std.is(o, ValueScope)) {
+			untyped o.set(f, v);
+			return v;
+		}
+		return super.set(o, f, v);
 	}
-	
+
 }

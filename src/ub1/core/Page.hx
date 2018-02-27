@@ -21,6 +21,8 @@
 
 package ub1.core;
 
+import ub1.util.PropertyTool.Props;
+import ub1.web.DomTools.DomDocument;
 import ub1.util.ArrayTool;
 import ub1.util.Set;
 #if server
@@ -106,13 +108,14 @@ class Page extends Element implements ServerPage {
 	}
 
 	// =========================================================================
-	// isomprphism
+	// isomorphism
 	// =========================================================================
 	public static inline var ISOID_PREFIX = 'ub1_';
 	public static inline var ISOCHILDREN_PROP = Element.NODE_PREFIX + 'c';
 	public static inline var ISOPROPS_ID = ISOID_PREFIX + 'props';
 
 #if server
+	//TODO: pre-parsed hscript should be passed to the client rather than source
 	public function addClient() {
 		function getChildren(props:Props): Array<Props> {
 			var children:Array<Props> = props.get(Page.ISOCHILDREN_PROP);

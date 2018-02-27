@@ -49,14 +49,14 @@ class TestSuite {
 			js.Browser.document.body.parentElement.style.display = 'none';
 		#end
 		#if php
-            // Tests are modeled as asynchronous in JS but in PHP they become
-            // nested call in order to accommodate PHP fully synchronous model.
-            // We therefore need to set a pretty high max nesting lavel while
-            // executing tests.
-            //
-            // http://stackoverflow.com/questions/17488505/php-error-maximum-function-nesting-level-of-100-reached-aborting
-            // ini_set('xdebug.max_nesting_level', 200);
-            untyped __php__("ini_set('xdebug.max_nesting_level', 1000);");
+			// Tests are modeled as asynchronous in JS but in PHP they become
+			// nested call in order to accommodate PHP fully synchronous model.
+			// We therefore need to set a pretty high max nesting lavel while
+			// executing tests.
+			//
+			// http://stackoverflow.com/questions/17488505/php-error-maximum-function-nesting-level-of-100-reached-aborting
+			// ini_set('xdebug.max_nesting_level', 200);
+			untyped __php__("ini_set('xdebug.max_nesting_level', 1000);");
 
 			// test data
 			var params = php.Web.getParams();
@@ -173,17 +173,17 @@ class TestSuite {
 			js.Lib.eval('
 				// http://stackoverflow.com/questions/649614/xml-parsing-of-a-variable-string-in-javascript
 				if (typeof window.DOMParser != "undefined") {
-				    window.parseXml = function(xmlStr) {
-				        return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
-				    };
+					window.parseXml = function(xmlStr) {
+						return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
+					};
 				} else if (typeof window.ActiveXObject != "undefined" &&
-				       new window.ActiveXObject("Microsoft.XMLDOM")) {
-				    window.parseXml = function(xmlStr) {
-				        var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
-				        xmlDoc.async = "false";
-				        xmlDoc.loadXML(xmlStr);
-				        return xmlDoc;
-				    };
+					new window.ActiveXObject("Microsoft.XMLDOM")) {
+					window.parseXml = function(xmlStr) {
+						var xmlDoc = new window.ActiveXObject("Microsoft.XMLDOM");
+						xmlDoc.async = "false";
+						xmlDoc.loadXML(xmlStr);
+						return xmlDoc;
+					};
 				} else {
 				    throw new Error("No XML parser found");
 				}
@@ -191,9 +191,9 @@ class TestSuite {
 				// http://www.w3schools.com/XSL/xsl_client.asp
 				window.loadXMLDoc = function(dname) {
 					if (window.ActiveXObject) {
-					  var xhttp = new ActiveXObject("Msxml2.XMLHTTP.3.0");
+						var xhttp = new ActiveXObject("Msxml2.XMLHTTP.3.0");
 					} else {
-					  var xhttp = new XMLHttpRequest();
+						var xhttp = new XMLHttpRequest();
 					}
 					xhttp.open("GET",dname,false);
 					xhttp.send("");
@@ -204,13 +204,13 @@ class TestSuite {
 				window.xsl = window.loadXMLDoc("test.xsl");
 
 				if (window.ActiveXObject) {
-				  var ex = xml.transformNode(xsl);
-				  document.body.innerHTML = ex;
+					var ex = xml.transformNode(xsl);
+					document.body.innerHTML = ex;
 				} else if (document.implementation && document.implementation.createDocument) {
-				  var xsltProcessor = new XSLTProcessor();
-				  xsltProcessor.importStylesheet(xsl);
-				  var resultDocument = xsltProcessor.transformToFragment(xml, document);
-				  document.body.appendChild(resultDocument);
+					var xsltProcessor = new XSLTProcessor();
+					xsltProcessor.importStylesheet(xsl);
+					var resultDocument = xsltProcessor.transformToFragment(xml, document);
+					document.body.appendChild(resultDocument);
 				}
 
 				eval(document.getElementById("toggleDisclose").text);

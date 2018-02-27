@@ -31,42 +31,42 @@ import ub1.util.DoubleLinkedItem;
 #end
 
 class ValueScope {
-    public var context(default,null): ValueContext;
-    public var parent(default,null): ValueScope;
+	public var context(default,null): ValueContext;
+	public var parent(default,null): ValueScope;
 	public var children(get,null): Array<ValueScope>;
-    public var uid(default,null): String;
+	public var uid(default,null): String;
 	public var name(default,null): String;
-    public var values(default,null): Map<String,Value>;
+	public var values(default,null): Map<String,Value>;
 	public var refreshableList(default,null): DoubleLinkedItem;
 	public var owner: Dynamic;
 	public var newValueDelegate: Value->Void;
 	//public var deferredApplyDelegate: ValueScope->Void;
 	public var clonedScope = false;
 
-    public function new(context:ValueContext,
-						parent:ValueScope,
-						uid:String,
-						?name:String,
-						?owner:Dynamic,
-						?before:ValueScope) {
-        this.context = context;
-        this.parent = parent;
-        this.uid = uid;
-	    this.name = name;
-	    owner != null ? this.owner = owner : null;
-	    values = new Map<String,Value>();
-	    if (name != null && parent != null) {
-		    new Value(this, name, null, parent).unlink();
-	    }
-	    refreshableList = new DoubleLinkedItem();
-	    //init();
-	    if (parent != null) {
-		    parent._children == null ? parent._children = [] : null;
-		    var pos = (before != null ? parent._children.indexOf(before) : -1);
-		    pos = (pos < 0 ? parent._children.length : pos);
-		    parent._children.insert(pos, this);
-	    }
-    }
+	public function new(context:ValueContext,
+	                    parent:ValueScope,
+	                    uid:String,
+	                    ?name:String,
+	                    ?owner:Dynamic,
+	                    ?before:ValueScope) {
+		this.context = context;
+		this.parent = parent;
+		this.uid = uid;
+		this.name = name;
+		owner != null ? this.owner = owner : null;
+		values = new Map<String,Value>();
+		if (name != null && parent != null) {
+			new Value(this, name, null, parent).unlink();
+		}
+		refreshableList = new DoubleLinkedItem();
+		//init();
+		if (parent != null) {
+			parent._children == null ? parent._children = [] : null;
+			var pos = (before != null ? parent._children.indexOf(before) : -1);
+			pos = (pos < 0 ? parent._children.length : pos);
+			parent._children.insert(pos, this);
+		}
+	}
 
 	inline public function get_children(): Array<ValueScope> {
 		return (_children != null ? _children : NO_CHILDREN);
@@ -109,10 +109,10 @@ class ValueScope {
 		}
 	}
 
-    public function reset() {
+	public function reset() {
 		owner = null;
-        values = new Map<String,Value>();
-    }
+		values = new Map<String,Value>();
+	}
 
 	public inline function get(key:String, pull=true): Dynamic {
 		var value:Value = values.get(key);
@@ -133,23 +133,23 @@ class ValueScope {
 	}
 
 	public inline function exists(key:String) {
-        return values.exists(key);
-    }
+		return values.exists(key);
+	}
 
 	@:access(ub1.react.Value)
-    public function set(key:String, val:Dynamic, push=true): Value {
-        var ret:Value = values.get(key);
-        if (ret != null) {
-	        ret.exp = null;
-	        ret.source = null;
-	        ret.valueFn = null;
-            push ? ret.set(val) : ret.value = val;
-        } else {
-            var name = ~/(\-)/g.replace(key, '_');
-            ret = new Value(val, name, key, this);
-        }
-        return ret;
-    }
+	public function set(key:String, val:Dynamic, push=true): Value {
+		var ret:Value = values.get(key);
+		if (ret != null) {
+			ret.exp = null;
+			ret.source = null;
+			ret.valueFn = null;
+			push ? ret.set(val) : ret.value = val;
+		} else {
+			var name = ~/(\-)/g.replace(key, '_');
+			ret = new Value(val, name, key, this);
+		}
+		return ret;
+	}
 
 	public inline function setValueFn(key:String,
 									  fn:Void->Dynamic,
@@ -207,11 +207,11 @@ class ValueScope {
 #end
 
 	public function animate(key:String,
-							val:Dynamic,
-							secs=.0,
-							delay=.0,
-							?cb:Void->Void,
-							?easing:Dynamic): Void {
+	                        val:Dynamic,
+	                        secs=.0,
+	                        delay=.0,
+	                        ?cb:Void->Void,
+	                        ?easing:Dynamic): Void {
 		var scope = this;
 		var s = scope;
 		while (s != null) {
