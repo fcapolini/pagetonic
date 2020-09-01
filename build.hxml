@@ -1,0 +1,7 @@
+# test
+-cp src
+-cp test
+-cp ../haxe-htmlparser/library
+-main pagetonic.TestAll
+--interp
+-L utest
