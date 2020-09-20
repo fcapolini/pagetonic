@@ -1,9 +1,8 @@
 package pagetonic.server;
 
-import htmlparser.HtmlDocument;
 import htmlparser.HtmlParser;
 
-class Parser extends HtmlParser {
+class SourceParser extends HtmlParser {
 
 	public static function __init__() {
 		// allow one or more ':' as an id prefix and inhibit
@@ -40,8 +39,8 @@ class Parser extends HtmlParser {
 					"ig");
 	}
 
-	public static function parseDoc(s:String):HtmlDocument {
-		return new HtmlDocument(s, true);
+	public static function parseDoc(s:String, name='-'): SourceDocument {
+		return new SourceDocument(s, true, name);
 	}
 
 }

@@ -1,6 +1,6 @@
 package pagetonic.server;
 
-import pagetonic.server.Parser;
+import pagetonic.server.SourceParser;
 import utest.Assert;
 import utest.Test;
 
@@ -14,14 +14,14 @@ class ParserTest extends Test {
 	}
 
 	function test1() {
-		var doc = Parser.parseDoc('<html :title="test"/>');
+		var doc = SourceParser.parseDoc('<html :title="test"/>');
 		var html = doc.domRootElement();
 		Assert.equals('html', html.domGetTagname());
 		Assert.equals('test', html.domGet(':title'));
 	}
 
 	function test2() {
-		var doc = Parser.parseDoc('<html>
+		var doc = SourceParser.parseDoc('<html>
 		<head></head>
 		<body></body>
 		</html>');

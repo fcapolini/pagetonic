@@ -18,9 +18,9 @@ package pagetonic.lib;
 	import htmlparser.HtmlNodeText;
 	import htmlparser.HtmlNode;
 	import htmlparser.HtmlNodeElement;
-	import htmlparser.HtmlDocument;
+	import pagetonic.server.SourceDocument;
 
-	typedef DomDocument = HtmlDocument;
+	typedef DomDocument = SourceDocument;
 	typedef DomElement = HtmlNodeElement;
 	typedef DomNode = HtmlNode;
 	typedef DomNodeList = Array<DomNode>;
@@ -35,7 +35,7 @@ class DomTools {
 		#if client
 			return Browser.document;
 		#else
-			return new HtmlDocument('<html><head></head><body></body></html>');
+			return new DomDocument('<html><head></head><body></body></html>');
 		#end
 	}
 
