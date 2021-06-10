@@ -1,1 +1,1 @@
-Moved to [ubimate / ub1](https://github.com/ubimate/ub1).
+Superseded by pageamp.
